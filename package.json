@@ -1,0 +1,25 @@
+{
+  "name": "amoeba",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "workspaces": [
+    "services/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently --kill-others --names gateway,limiter,amoeba,web \"npm run dev:gateway\" \"npm run dev:limiter\" \"npm run dev:amoeba\" \"npm run dev:web\"",
+    "dev:gateway": "npm run dev --workspace=@amoeba/gateway",
+    "dev:limiter": "npm run dev --workspace=@amoeba/rate-limiter",
+    "dev:amoeba": "npm run dev --workspace=@amoeba/amoeba",
+    "dev:web": "npm run dev --workspace=@amoeba/web",
+    "build": "npm run build --workspace=@amoeba/web",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
